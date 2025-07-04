@@ -75,6 +75,21 @@ const Index = () => {
     }
   }, [arrivalTime, departureTime]);
 
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
+  const setCurrentArrivalTime = () => {
+    setArrivalTime(getCurrentTime());
+  };
+
+  const setCurrentDepartureTime = () => {
+    setDepartureTime(getCurrentTime());
+  };
+
   const formatTime = (minutes) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -120,13 +135,24 @@ const Index = () => {
             {/* Arrival Time */}
             <div className="space-y-2">
               <Label htmlFor="arrival">Arrival Time</Label>
-              <Input
-                id="arrival"
-                type="time"
-                value={arrivalTime}
-                onChange={(e) => setArrivalTime(e.target.value)}
-                className="text-lg"
-              />
+              <div className="flex gap-2">
+                <Input
+                  id="arrival"
+                  type="time"
+                  value={arrivalTime}
+                  onChange={(e) => setArrivalTime(e.target.value)}
+                  className="text-lg flex-1"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={setCurrentArrivalTime}
+                  className="px-3"
+                >
+                  Now
+                </Button>
+              </div>
             </div>
 
             {/* End Time Display */}
@@ -146,14 +172,25 @@ const Index = () => {
             {/* Departure Time */}
             <div className="space-y-2">
               <Label htmlFor="departure">Actual Departure Time (Optional)</Label>
-              <Input
-                id="departure"
-                type="time"
-                value={departureTime}
-                onChange={(e) => setDepartureTime(e.target.value)}
-                className="text-lg"
-                placeholder="Enter to calculate overtime"
-              />
+              <div className="flex gap-2">
+                <Input
+                  id="departure"
+                  type="time"
+                  value={departureTime}
+                  onChange={(e) => setDepartureTime(e.target.value)}
+                  className="text-lg flex-1"
+                  placeholder="Enter to calculate overtime"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={setCurrentDepartureTime}
+                  className="px-3"
+                >
+                  Now
+                </Button>
+              </div>
             </div>
 
             {/* Overtime Display */}
